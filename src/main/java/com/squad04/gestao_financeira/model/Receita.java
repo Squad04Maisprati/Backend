@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Receita {
+public class Receita extends Transacao {
 
     // Attributes --->
 
