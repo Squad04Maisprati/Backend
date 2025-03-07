@@ -1,14 +1,18 @@
 package com.squad04.gestao_financeira.model;
 
 
+import com.squad04.gestao_financeira.userEnum.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.Instant;
+import java.util.Collection;
+import java.util.List;
 
 
-@Table(name = "tb_usuarios")
+@Table(name = "usuario")
 @Entity
 @Getter
 @Setter
@@ -16,88 +20,65 @@ import java.time.Instant;
 @AllArgsConstructor
 @Builder
 
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "username")
+    @OneToMany(mappedBy = "usuario")
+    private List<Transacao> transacoes;
+
     private String username;
-
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "senha")
     private String senha;
-
-    @Column(name = "cpf")
+    private String email;
     private String cpf;
-
-    @Column(name = "numCelular")
     private String numCelular;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
-    @CreationTimestamp
-    private Instant creationTimestamp;
-//Quando é criada/ atualizada (create e update)
 
-    @updateTimesTamp
-    private Instant updatedTimestamp;
-
-    public usuario() {
-    }
-
-    public usuario(String username, String email, String senha, String cpf, String numCelular){
+    public Usuario(String username,String email, String cpf, String numCelular, String senha, UserRole role){
         this.username = username;
         this.email = email;
-        this.senha = senha;
         this.cpf = cpf;
-        this.numCelular = numCelular;
-        this.creationTimestamp = creationTimestamp;
-        this.updatedTimestamp = updatedTimestamp;
-
-    }
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-    public void setSenha(String senha) {
         this.senha = senha;
+        this.numCelular = numCelular;
+        this.role = role;
+   }
+
+
+//verificação da role do usuário. Se for adm, recebe as roles de adm+user.
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
-    public String getCpf() {
-        return cpf;
+    @Override
+    public String getPassword() {
+        return this.senha;
     }
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
     }
-    public String getNumCelular() {
-        return numCelular;
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
     }
-    public void setNumCelular(String numCelular) {
-        this.numCelular = numCelular;
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
     }
-    public Instant getCreationTimestamp() {
-        return creationTimestamp;
-    }
-    public void setCreationTimestamp(Instant creationTimestamp) {
-        this.creationTimestamp = creationTimestamp;
-    }
-    public Instant getUpdatedTimestamp() {
-        return updatedTimestamp;
-    }
-    public void setUpdatedTimestamp(Instant updatedTimestamp) {
-        this.updatedTimestamp = updatedTimestamp;
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
     }
 }
+

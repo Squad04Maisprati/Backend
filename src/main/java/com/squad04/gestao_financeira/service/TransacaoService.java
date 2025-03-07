@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class TransacaoService {
 
-    private final CategoriaRepository categoriaRepository;
+    private CategoriaRepository categoriaRepository;
     private TransacaoRepository transacaoRepository;
 
     public TransacaoService(TransacaoRepository transacaoRepository, CategoriaRepository categoriaRepository) {

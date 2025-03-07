@@ -24,9 +24,14 @@ public class Transacao {
     private LocalDate data;
     private String descricao;
     private Boolean fixo;
+
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 
 
 
