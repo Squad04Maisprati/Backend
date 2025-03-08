@@ -1,76 +1,64 @@
-/* package service;
+package service;
 
 import com.squad04.gestao_financeira.dto.CreateUserDto;
 import com.squad04.gestao_financeira.dto.UpdateUserDto;
 import Repository.UserRepository;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
-
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserService {
 
-   private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-   public UserService(UserRepository userRepository) {
-       this.userRepository = userRepository;
-   }
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-   public UUID createUser (CreateUserDto createUserDto) {
+    public Long createUser(CreateUserDto createUserDto) {
+        var entity = new User(
+                null, // ID será gerado automaticamente
+                createUserDto.username(),
+                createUserDto.email(),
+                createUserDto.password(),
+                Instant.now(),
+                null // updateTimestamp inicialmente nulo
+        );
 
-       var entity = new User (
-               UUID.randomUUID(),
-               createUserDto.username(),
-               createUserDto.email(),
-               createUserDto.password(),
-               instant.now(),
-               updateTimestamp: null);
+        var userSaved = userRepository.save(entity);
+        return userSaved.getUserId();
+    }
 
-      var userSaved = userRepository.save(entity);
+    public Optional<User> getUserById(Long userId) {
+        return userRepository.findById(userId);
+    }
 
-      return userSaved.getUserId();
+    public List<User> listUsers() {
+        return userRepository.findAll();
+    }
 
-   }
+    public void updateUserById(Long userId, UpdateUserDto updateUserDto) {
+        var userEntity = userRepository.findById(userId);
 
-   public Optional<User> getUserById (String userId) {
+        if (userEntity.isPresent()) {
+            var user = userEntity.get();
 
-       return userRepository.findById (UUID.fromString(userId))
-   }
+            if (updateUserDto.username() != null) {
+                user.setUsername(updateUserDto.username());
+            }
+            if (updateUserDto.password() != null) {
+                user.setPassword(updateUserDto.password());
+            }
 
-   public List <User> ListUsers () {
-       return userRepository.findAll();
-   }
+            userRepository.save(user);
+        }
+    }
 
-   public void updateUserById (String userId, UpdateUserDto updateUserDto) {
-
-       var id = UUID.fromString(userId);
-
-       var userEntity userRepository.findById(id);
-
-       if (userEntity.isPresent()) {
-           var user = userExists.get();
-
-           if (updateUserDto.username() != null ) {
-               user.setUsername(updateUserDto.username());
-           }
-           if (updateUserDto.password() != null ) {
-               user.setPassword(updateUserDto.password());
-           }
-
-           userRepository.save(user);
-       }
-   }
-
-   public void deleteById (String userId) {
-       var id = UUID.fromString(userId);
-       var userExists = userRepository.existsById();
-
-       if (userExists) {
-           userRepository.deleteById (id);
-       }
-   }
+    public void deleteById(Long userId) {
+        if (userRepository.existsById(userId)) {
+            userRepository.deleteById(userId);
+        }
+    }
 }
-*/
