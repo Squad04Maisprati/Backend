@@ -29,5 +29,4 @@ public class Transacao {
     private Categoria categoria;
 
 
-
 }

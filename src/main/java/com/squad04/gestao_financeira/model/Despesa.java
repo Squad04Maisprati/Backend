@@ -1,35 +1,26 @@
 package com.squad04.gestao_financeira.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.Entity;
+import lombok.*;
 
+import java.time.LocalDate;
+
+@Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Despesa extends Transacao {
 
-    // Attributes --->
+    private String localDespesa;
+    private String metodoPagamento;
 
-    private String LocalDespesa;
-
-    private String MetodoPagamento;
-
-    //Attributes <---
-
-    // Methods --->
-
-    public String RegistrarLocalDespesa() {
-        return LocalDespesa;
+    public void registrarLocalDespesa(String localDespesa) {
+        this.localDespesa = localDespesa;
     }
 
-    public String RegistrarMetodoPagamento(){
-        return MetodoPagamento;
+    public void registrarMetodoPagamento(String metodoPagamento) {
+        this.metodoPagamento = metodoPagamento;
     }
-
-    // Methods <---
-
 }

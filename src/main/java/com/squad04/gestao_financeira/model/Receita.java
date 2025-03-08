@@ -1,29 +1,21 @@
 package com.squad04.gestao_financeira.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.Entity;
+import lombok.*;
 
+import java.time.LocalDate;
+
+@Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Receita extends Transacao {
-
-    // Attributes --->
 
     private String contaBancaria;
 
-    // Attributes <---
-
-    // Methods --->
-
-    public String RegistrarTipoContaBancaria (){
-        return contaBancaria;
+    public void registrarContaBancaria(String contaBancaria) {
+        this.contaBancaria = contaBancaria;
     }
-
-    //Methods <---
-
 }
