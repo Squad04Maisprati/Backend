@@ -1,7 +1,6 @@
 package com.squad04.gestao_financeira.dto;
 
 import lombok.*;
-
 import java.time.LocalDate;
 
 @Builder
@@ -18,3 +17,4 @@ public class ReceitaRequestDto {
     private Long categoriaId;
     private String contaBancaria;
 }
+
