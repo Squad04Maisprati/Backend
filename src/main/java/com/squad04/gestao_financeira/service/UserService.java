@@ -1,4 +1,4 @@
-package service;
+/* package service;
 
 import com.squad04.gestao_financeira.dto.CreateUserDto;
 import com.squad04.gestao_financeira.dto.UpdateUserDto;
@@ -13,63 +13,64 @@ import java.util.UUID;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
+   private UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+   public UserService(UserRepository userRepository) {
+       this.userRepository = userRepository;
+   }
 
-    public UUID createUser (CreateUserDto createUserDto) {
+   public UUID createUser (CreateUserDto createUserDto) {
 
-        var entity = new User (
-                UUID.randomUUID(),
-                createUserDto.username(),
-                createUserDto.email(),
-                createUserDto.password(),
-                instant.now(),
-                updateTimestamp: null);
+       var entity = new User (
+               UUID.randomUUID(),
+               createUserDto.username(),
+               createUserDto.email(),
+               createUserDto.password(),
+               instant.now(),
+               updateTimestamp: null);
 
-       var userSaved = userRepository.save(entity);
+      var userSaved = userRepository.save(entity);
 
-       return userSaved.getUserId();
+      return userSaved.getUserId();
 
-    }
+   }
 
-    public Optional<User> getUserById (String userId) {
+   public Optional<User> getUserById (String userId) {
 
-        return userRepository.findById (UUID.fromString(userId))
-    }
+       return userRepository.findById (UUID.fromString(userId))
+   }
 
-    public List <User> ListUsers () {
-        return userRepository.findAll();
-    }
+   public List <User> ListUsers () {
+       return userRepository.findAll();
+   }
 
-    public void updateUserById (String userId, UpdateUserDto updateUserDto) {
+   public void updateUserById (String userId, UpdateUserDto updateUserDto) {
 
-        var id = UUID.fromString(userId);
+       var id = UUID.fromString(userId);
 
-        var userEntity userRepository.findById(id);
+       var userEntity userRepository.findById(id);
 
-        if (userEntity.isPresent()) {
-            var user = userExists.get();
+       if (userEntity.isPresent()) {
+           var user = userExists.get();
 
-            if (updateUserDto.username() != null ) {
-                user.setUsername(updateUserDto.username());
-            }
-            if (updateUserDto.password() != null ) {
-                user.setPassword(updateUserDto.password());
-            }
+           if (updateUserDto.username() != null ) {
+               user.setUsername(updateUserDto.username());
+           }
+           if (updateUserDto.password() != null ) {
+               user.setPassword(updateUserDto.password());
+           }
 
-            userRepository.save(user);
-        }
-    }
+           userRepository.save(user);
+       }
+   }
 
-    public void deleteById (String userId) {
-        var id = UUID.fromString(userId);
-        var userExists = userRepository.existsById();
+   public void deleteById (String userId) {
+       var id = UUID.fromString(userId);
+       var userExists = userRepository.existsById();
 
-        if (userExists) {
-            userRepository.deleteById (id);
-        }
-    }
+       if (userExists) {
+           userRepository.deleteById (id);
+       }
+   }
 }
+*/

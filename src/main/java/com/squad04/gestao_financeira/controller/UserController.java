@@ -1,4 +1,4 @@
-package Controller;
+/* package Controller;
 
 import com.squad04.gestao_financeira.dto.CreateUserDto;
 import com.squad04.gestao_financeira.dto.UpdateUserDto;
@@ -58,3 +58,4 @@ public class UserController {
     }
 
 }
+*/
