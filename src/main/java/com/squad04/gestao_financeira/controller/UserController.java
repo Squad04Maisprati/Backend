@@ -1,15 +1,19 @@
-package Controller;
+package com.squad04.gestao_financeira.controller;
 
-import com.squad04.gestao_financeira.dto.CreateUserDto;
-import com.squad04.gestao_financeira.dto.UpdateUserDto;
+import com.squad04.gestao_financeira.dto.;
+import com.squad04.gestao_financeira.dto.;
 import org.apache.catalina.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.UserService;
+import com.squad04.gestao_financeira.service.UserService;
+import org.springframework.web.bind.annotation.PathVariable;
+import java.net.URI;
+
 
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/v1/users")
 
 public class UserController {
@@ -28,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping("/userId")
-    public ResponseEntity<User> getUserById(@pathVariable ("userId") String UserId) {
+    public ResponseEntity<User> getUserById(@PathVariable ("userId") String UserId) {
             var user = userService.getUserById(UserId);
 
             if (user.isPresent ()) {

@@ -1,12 +1,14 @@
-package service;
+package com.squad04.gestao_financeira.service;
 
 import com.squad04.gestao_financeira.dto.CreateUserDto;
 import com.squad04.gestao_financeira.dto.UpdateUserDto;
-import Repository.UserRepository;
+import com.squad04.gestao_financeira.repository.UserRepository;
+import org.apache.catalina.User;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
+import java.util.Optional<User>;
 
 @Service
 public class UserService {
@@ -17,7 +19,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Long createUser(CreateUserDto createUserDto) {
+    public Long createUser(@NotNull CreateUserDto createUserDto) {
         var entity = new User(
                 null, // ID será gerado automaticamente
                 createUserDto.username(),
@@ -26,9 +28,9 @@ public class UserService {
                 Instant.now(),
                 null // updateTimestamp inicialmente nulo
         );
-
-        var userSaved = userRepository.save(entity);
-        return userSaved.getUserId();
+        // Salva a entidade no repositório e retorna o ID gerado
+        var savedEntity = userRepository.save(entity);
+        return savedEntity.getId();
     }
 
     public Optional<User> getUserById(Long userId) {

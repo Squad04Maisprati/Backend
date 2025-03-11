@@ -4,15 +4,13 @@ import com.squad04.gestao_financeira.model.Categoria;
 import com.squad04.gestao_financeira.service.CategoriaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("categorias")
 @Controller
+@CrossOrigin
 public class CategoriaController {
 
     private CategoriaService categoriaService;
